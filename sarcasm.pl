@@ -18,7 +18,9 @@ adve(X,neutral):-adverb(X,A,B),B=A.
 
 start:- enter_sentence.
 enter_sentence:-
-write('Enter a sentence to compute: '), readln(L),write('Is sentence sarcastic? '),split_string(L, "\s", "\s", X),sarcasm(X).
+write('Enter a sentence to compute: '), read(Atom),atom_string(Atom,String),write('Is sentence sarcastic? '),
+      split_string(String, "\s", "\s", [X]),sarcasm([X]).
+
 
 
 
