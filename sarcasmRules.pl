@@ -1,33 +1,47 @@
 
-sarcasm->phrase(negative) phrase(positive)
-sarcasm->phrase(positive) phrase(negative)
-sarcasm->phrase(neutral) phrase(positive)
+sarcasm-->phrases(negative), phrases(positive).
+sarcasm-->phrases(positive), phrases(negative).
+sarcasm-->phrases(neutral), phrases(positive).
 
-phrase(positive)-> np(subject) vp(positive)
-phrase(neutral)-> np(subject) vp(neutral)
-phrase(negative)-> np(subject) vp(negative)
-phrase(negative)-> adj(negative) np(_)
-phrase(negative)-> adj(negative) np(_) vp(negative)
+phrases(positive)--> np(positive), vp(positive).
+phrases(neutral)--> np(neutral), vp(neutral).
+phrases(negative)--> np(negative), vp(negative).
 
-np(positive)->n(X,positive)
-np(positive)->adj(X,positive) n(Y,positive)
-np(positive)->adj(X,positive) n(Y, nuetral)
+phrases(positive)-->vp(positive).
+phrases(negative)--> np(negative).
 
-np(neutral)-> n(X,neutral)
-np(neutral)-> adj(X,neutral) n(Y,neutral)
-np(negative)-> n(X,negative)
-np(negative)-> adj(X,negative) n(Y,neutral)
-np(negative)-> adj(X,negative) n(Y,negative)
+phrases(negative)--> adj(negative), np(_).
+phrases(negative)--> adj(negative), np(_) ,vp(negative).
+phrases(negative)-->vp(negative).
 
-vp(positive)-> v(X,postive)
-vp(positive)-> adj(X,positive) v(Y,neutral)
-vp(positive)-> adj(X,positive) v(Y,positive)
-vp(positive)-> v(X,positive) adj(Y,neutral)
-vp(positive)-> v(X,positive) adj(Y,positive)
-vp(neutral)-> v(X,neutral)
-vp(neutral)-> adj(X,neutral) v(Y,neutral)
-vp(negative)-> v(X,negative)
-vp(negative)-> adj(X,negative) v(Y,neutral)
-vp(negative)-> adj(X,negative) v(Y,negative)
-vp(negative)-> v(X,neutral) adj(Y,negative)
-vp(negative)-> v(X,negative) adj(Y,negative)
+
+np(positive)-->n(_,positive).
+np(positive)-->adj(_,positive), n(_,positive).
+np(positive)-->adj(_,positive), n(_, nuetral).
+
+
+np(neutral)--> n(_,neutral).
+np(neutral)--> adj(_,neutral), n(_,neutral).
+
+
+np(negative)--> n(_,negative).
+np(negative)--> adj(_,negative), n(_,neutral).
+np(negative)--> adj(_,negative), n(_,negative).
+
+
+vp(positive)--> pronoun, v(_,postive).
+vp(positive)--> adj(_,positive), v(_,neutral).
+vp(positive)--> adj(_,positive), v(_,positive).
+vp(positive)--> v(_,positive), adj(_,neutral).
+vp(positive)--> v(_,positive), adj(_,positive).
+
+
+vp(neutral)--> v(_,neutral).
+vp(neutral)--> adj(_,neutral), v(_,neutral).
+
+
+vp(negative)--> v(_,negative).
+vp(negative)--> adj(_,negative), v(_,neutral).
+vp(negative)--> adj(_,negative), v(_,negative).
+vp(negative)--> v(_,neutral), adj(_,negative).
+vp(negative)--> v(_,negative), adj(_,negative).
