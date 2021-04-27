@@ -1,4 +1,4 @@
-:- ['sentiment_scoring'].
+:- use_module('sentiment_scoring').
 
 :- begin_tests(lookup).
 

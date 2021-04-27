@@ -1,6 +1,6 @@
 :- module(sentiment_scoring, [lookup/3, score/3]).
 
-:- consult('sentiword').
+:- ensure_loaded('sentiword').
 lookup(Word, PosScore, NegScore) :-
     adjective(Word, PosScore, NegScore);
     adveb(Word, PosScore, NegScore);
