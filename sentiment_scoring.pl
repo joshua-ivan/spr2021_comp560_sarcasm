@@ -20,5 +20,3 @@ score_([Word|Rest], PosAcc, PosTotal, NegAcc, NegTotal) :-
 score(X, PosTotal, NegTotal) :-
     score_(X, 0, PosTotal, 0, NegTotal).
 
-hello(X) :- write(X), nl.
-
