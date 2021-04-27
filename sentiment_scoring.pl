@@ -6,7 +6,9 @@ lookup(Word, PosScore, NegScore) :-
     adveb(Word, PosScore, NegScore);
     noun(Word, PosScore, NegScore);
     verb(Word, PosScore, NegScore).
-lookup(_, 0, 0).
+lookup(NotInSentiword, 0, 0) :- string(NotInSentiword), !.
+lookup(NotAString, 0, 0) :-
+    format('WARN: lookup called with nonstring \'~w\'', [NotAString]).
 
 score_([], PosTotal, PosTotal, NegTotal, NegTotal).
 score_([Word|Rest], PosAcc, PosTotal, NegAcc, NegTotal) :-
