@@ -15,6 +15,11 @@ test(invalid_scores, [ true(not(Sarcastic)), nondet ]) :-
 
     is_sarcasm(1.0, 1.0, Sarcastic).
 
+test(division_by_zero, [true(not(Sarcastic)) ]) :-
+    is_sarcasm(0.0, 1.0, Sarcastic),
+    is_sarcasm(1.0, 0.0, Sarcastic),
+    is_sarcasm(0.0, 0.0, Sarcastic).
+
 :- end_tests(is_sarcasm).
 
 :- begin_tests(append_csv).
