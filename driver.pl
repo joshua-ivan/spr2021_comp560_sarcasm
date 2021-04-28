@@ -1,5 +1,6 @@
 :- module(driver, [ is_sarcasm/3, append_csv/5 ]).
 :- use_module(library(readutil)).
+:- ensure_loaded('config').
 
 % stub, to be integrated with sentiment_scoring
 score_line_([], PosTotal, PosTotal, NegTotal, NegTotal).
@@ -11,8 +12,11 @@ score_line(Line, PosTotal, NegTotal) :-
     score_line_(Line, 0, PosTotal, 0, NegTotal).
 
 is_sarcasm(Pos, Neg, true) :-
+    config(sarcasm_score_lower_bound, Lower),
+    config(sarcasm_score_upper_bound, Upper),
+
     Score is (min(Pos, Neg) / max(Pos, Neg)),
-    Score >= 0.175, Score =< 0.225.
+    Score >= Lower, Score =< Upper.
 is_sarcasm(_, _, false).
 
 append_csv(Csv, Line, Pos, Neg, Sarcastic) :-
@@ -22,13 +26,15 @@ append_csv(Csv, Line, Pos, Neg, Sarcastic) :-
 
 process_(_, end_of_file) :- !.
 process_(Stream, _) :-
+    config(results_file_name, ResultsCsv),
+
     read_line_to_string(Stream, Line),
     string_length(Line, Length),
     ( Length > 0 -> (
         split_string(Line, " ", " ", Phrases),
         score_line(Phrases, Pos, Neg),
         is_sarcasm(Pos, Neg, Sarcastic),
-        append_csv("results.csv", Line, Pos, Neg, Sarcastic)
+        append_csv(ResultsCsv, Line, Pos, Neg, Sarcastic)
     ); true ),
     process_(Stream, Line).
 
