@@ -45,5 +45,16 @@ test(backslashes, [
 ]) :-
     escape_chars("Test\\Line", Line).
 
-
 :- end_tests(escape_chars).
+
+:- begin_tests(write_header).
+
+test(normal_behavior, [
+    true(File == ":- module(test, [ database_size/1, tweet/2 ]).\ndatabase_size(10).\n\n"),
+    cleanup(delete_file("test.pl"))
+]) :-
+    write_header("test.pl", "test", 10),
+    read_file_to_string("test.pl", File, []).
+
+:- end_tests(write_header).
+

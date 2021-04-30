@@ -1,6 +1,12 @@
-:- module(text_cleaner, [ clean/2, append_file/3, escape_chars/2 ]).
+:- module(text_cleaner, [ clean/2, write_header/3, append_file/3, escape_chars/2 ]).
 :- use_module(library(readutil)).
 :- ensure_loaded('config').
+
+write_header(OutputFile, Module, DB_Size) :-
+    open(OutputFile, update, File),
+    format(File, ':- module(~s, [ database_size/1, tweet/2 ]).\n', [Module]),
+    format(File, 'database_size(~d).\n\n', [DB_Size]),
+    close(File).
 
 append_file(Number, Line, OutputFile) :-
     open(OutputFile, append, File),
