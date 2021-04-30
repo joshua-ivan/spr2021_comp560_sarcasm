@@ -8,10 +8,12 @@ append_file(Number, Line, OutputFile) :-
     close(File).
 
 escape_chars(Line, EscapedLine) :-
-    split_string(Line, "\'", "", TempA),
-    atomics_to_string(TempA, "\\\'", TempB),
-    split_string(TempB, "\"", "", TempC),
-    atomics_to_string(TempC, "\\\"", EscapedLine).
+    split_string(Line, "\\", "", TempA),
+    atomics_to_string(TempA, "\\\\", TempB),
+    split_string(TempB, "\'", "", TempC),
+    atomics_to_string(TempC, "\\\'", TempD),
+    split_string(TempD, "\"", "", TempE),
+    atomics_to_string(TempE, "\\\"", EscapedLine).
 
 clean_(_, _, _, end_of_file) :- !.
 clean_(Stream, OutputFile, LinesWritten, _) :-

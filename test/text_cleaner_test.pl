@@ -41,7 +41,7 @@ test(double_quotes, [
     escape_chars("\"Test Line\"", Line).
 
 test(backslashes, [
-    true(Line == "Test\\Line")
+    true(Line == "Test\\\\Line")
 ]) :-
     escape_chars("Test\\Line", Line).
 
