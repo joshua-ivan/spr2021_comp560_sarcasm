@@ -23,21 +23,27 @@ test(multiple_lines, [
 
 :- end_tests(append_file).
 
-:- begin_tests(escape_quotes).
+:- begin_tests(escape_chars).
 
 test(no_extra_quotes, [
     true(Line == "Test Line")
 ]) :-
-    escape_quotes("Test Line", Line).
+    escape_chars("Test Line", Line).
 
 test(single_quotes, [
     true(Line == "\\\'Test Line\\\'")
 ]) :-
-    escape_quotes("\'Test Line\'", Line).
+    escape_chars("\'Test Line\'", Line).
 
-test(multiple_quotes, [
+test(double_quotes, [
     true(Line == "\\\"Test Line\\\"")
 ]) :-
-    escape_quotes("\"Test Line\"", Line).
+    escape_chars("\"Test Line\"", Line).
 
-:- end_tests(escape_quotes).
+test(backslashes, [
+    true(Line == "Test\\Line")
+]) :-
+    escape_chars("Test\\Line", Line).
+
+
+:- end_tests(escape_chars).
