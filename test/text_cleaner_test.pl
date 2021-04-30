@@ -22,3 +22,22 @@ test(multiple_lines, [
     read_file_to_string("test.csv", File, []).
 
 :- end_tests(append_file).
+
+:- begin_tests(escape_quotes).
+
+test(no_extra_quotes, [
+    true(Line == "Test Line")
+]) :-
+    escape_quotes("Test Line", Line).
+
+test(single_quotes, [
+    true(Line == "\\\'Test Line\\\'")
+]) :-
+    escape_quotes("\'Test Line\'", Line).
+
+test(multiple_quotes, [
+    true(Line == "\\\"Test Line\\\"")
+]) :-
+    escape_quotes("\"Test Line\"", Line).
+
+:- end_tests(escape_quotes).
