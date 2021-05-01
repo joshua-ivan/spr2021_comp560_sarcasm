@@ -39,7 +39,7 @@ def prologify(facts):
             pldb.append('noun(' + '\"' + proper_entry + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
         elif fact_type == 'r':
             proper_entry = remove_illegal_syntax(entry[1])
-            pldb.append('adveb(' + '\"' + proper_entry + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
+            pldb.append('adverb(' + '\"' + proper_entry + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
         elif fact_type == 's':
             proper_entry = remove_illegal_syntax(entry[1])
             pldb.append('adjective_satellite(' + '\"' + proper_entry + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
