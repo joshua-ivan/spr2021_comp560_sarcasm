@@ -21,7 +21,18 @@ escape_chars(Line, EscapedLine) :-
     split_string(TempD, "\"", "", TempE),
     atomics_to_string(TempE, "\\\"", EscapedLine).
 
-clean_(_, _, _, end_of_file) :- !.
+clean_(_, OutputFile, LinesWritten, end_of_file) :-
+    split_string(OutputFile, "/.", "", [_,ModuleName|_]),
+    write_header(".header.tmp", ModuleName, LinesWritten),
+
+    read_file_to_string(".header.tmp", Header, []),
+    read_file_to_string(OutputFile, Tweets, []),
+    string_concat(Header, Tweets, AllContents),
+
+    open(OutputFile, write, File),
+    write(File, AllContents),
+    close(File),
+    delete_file(".header.tmp"), !.
 clean_(Stream, OutputFile, LinesWritten, _) :-
     read_line_to_string(Stream, Line),
     string_length(Line, Length),
