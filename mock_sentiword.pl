@@ -1,0 +1,12 @@
+noun("coordination", 0.5, 0).
+noun("dance", 0, 0).
+noun("tragedy", 0, 0.5).
+verb("abandon", 0, 0.375).
+verb("accumulate", 0, 0).
+verb("work", 0.375, 0).
+adjective("absolute", 0.5, 0).
+adjective("absorbent", 0, 0).
+adjective("aggravated", 0, 0.5).
+adverb("a_great_deal", 0.375, 0).
+adverb("about", 0, 0).
+adverb("ad_infinitum", 0, 0.5).

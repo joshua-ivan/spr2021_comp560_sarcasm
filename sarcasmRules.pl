@@ -1,44 +1,27 @@
 :- consult([sentiword,determiners]).
 
-n(X,positive,Phrase,Remaining)
-    :-noun(X,A,B),A>0,A>B,
-    Phrase == [X|Remaining].
-n(X,negative,Phrase,Remaining):-
-    noun(X,A,B),B>A,B>0,
-    Phrase == [X|Remaining].
-n(X,neutral,Phrase,Remaining):-
-    noun(X,A,B),B=A,A=0,
-    Phrase == [X|Remaining].
+positive(A, B) :- A > 0, A > B.
+negative(A, B) :- B > A, B > 0.
+neutral(A, B) :- A == 0, B == 0.
 
-v(X,positive,Phrase,Remaining):-
-    verb(X,A,B),A>0, A>B,
-    Phrase == [X|Remaining].
-v(X,negative,Phrase,Remaining):-
-    verb(X,A,B),B>A,B>0,
-    Phrase == [X|Remaining].
-v(X,neutral,Phrase,Remaining):-
-    verb(X,A,B),B=A,A=0,
-    Phrase == [X|Remaining].
+lookup(Pos, X, A, B, Phrase, Remaining) :-
+    call(Pos, X, A, B),
+    Phrase == [X | Remaining].
+lookup(Pos, NotInSentiword, 0, 0) :-
+    format('WARN: \'~w(~w)\' not present in Sentiword\n', [Pos, NotInSentiword]).
 
-adj(X,positive,Phrase,Remaining):-
-    adjective(X,A,B),A>0, A>B,
-    Phrase == [X|Remaining].
-adj(X,negative,Phrase,Remaining):-
-    adjective(X,A,B),B>A,B>0,
-    Phrase == [X|Remaining].
-adj(X,neutral,Phrase,Remaining):-
-    adjective(X,A,B),B=A,
-    Phrase == [X|Remaining].
-
-adv(X,positive,Phrase,Remaining):-
-    adverb(X,A,B),A>0, A>B,
-    Phrase == [X|Remaining].
-adv(X,negative,Phrase,Remaining):-
-    adverb(X,A,B),B>A,B>0,
-    Phrase == [X|Remaining].
-adv(X,neutral,Phrase,Remaining):-
-    adverb(X,A,B),B=A,
-    Phrase == [X|Remaining].
+n(X, Comparator, Phrase, Remaining):-
+    lookup(noun, X, A, B, Phrase, Remaining),
+    call(Comparator, A, B).
+v(X, Comparator, Phrase, Remaining):-
+    lookup(verb, X, A, B, Phrase, Remaining),
+    call(Comparator, A, B).
+adj(X, Comparator, Phrase, Remaining):-
+    lookup(adjective, X, A, B, Phrase, Remaining),
+    call(Comparator, A, B).
+adv(X, Comparator, Phrase, Remaining):-
+    lookup(adverb, X, A, B, Phrase, Remaining),
+    call(Comparator, A, B).
 
 sarcastic_sentence--> sarcasm.
 
@@ -117,7 +100,7 @@ neuVP--> v(_,neutral), adv(_,neutral).
 neuVP--> adv(neutral), v(neutral).
 neuVP--> pronoun, adv(neutral), v(neutral).
 
-negVP-->  v(_,negative).
+negVP--> v(_,negative).
 negVP--> pronoun, v(_,negative).
 negVP--> adj(_,negative), v(_,neutral).
 negVP--> adj(_,negative), v(_,negative).
