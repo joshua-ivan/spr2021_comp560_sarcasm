@@ -1,20 +1,44 @@
 :- consult([sentiword,determiners]).
 
-n(X,positive):-noun(X,A,B),A>0, A>B.
-n(X,negative):-noun(X,A,B),B>A,B>0.
-n(X,neutral):-noun(X,A,B),B=A,A=0.
+n(X,positive,Phrase,Remaining)
+    :-noun(X,A,B),A>0,A>B,
+    Phrase == [X|Remaining].
+n(X,negative,Phrase,Remaining):-
+    noun(X,A,B),B>A,B>0,
+    Phrase == [X|Remaining].
+n(X,neutral,Phrase,Remaining):-
+    noun(X,A,B),B=A,A=0,
+    Phrase == [X|Remaining].
 
-v(X,positive):-verb(X,A,B),A>0, A>B.
-v(X,negative):-verb(X,A,B),B>A,B>0.
-v(X,neutral):-verb(X,A,B),B=A,A=0.
+v(X,positive,Phrase,Remaining):-
+    verb(X,A,B),A>0, A>B,
+    Phrase == [X|Remaining].
+v(X,negative,Phrase,Remaining):-
+    verb(X,A,B),B>A,B>0,
+    Phrase == [X|Remaining].
+v(X,neutral,Phrase,Remaining):-
+    verb(X,A,B),B=A,A=0,
+    Phrase == [X|Remaining].
 
-adj(X,positive):-adjective(X,A,B),A>0, A>B.
-adj(X,negative):-adjective(X,A,B),B>A,B>0.
-adj(X,neutral):-adjective(X,A,B),B=A.
+adj(X,positive,Phrase,Remaining):-
+    adjective(X,A,B),A>0, A>B,
+    Phrase == [X|Remaining].
+adj(X,negative,Phrase,Remaining):-
+    adjective(X,A,B),B>A,B>0,
+    Phrase == [X|Remaining].
+adj(X,neutral,Phrase,Remaining):-
+    adjective(X,A,B),B=A,
+    Phrase == [X|Remaining].
 
-adv(X,positive):-adverb(X,A,B),A>0, A>B.
-adv(X,negative):-adverb(X,A,B),B>A,B>0.
-adv(X,neutral):-adverb(X,A,B),B=A.
+adv(X,positive,Phrase,Remaining):-
+    adverb(X,A,B),A>0, A>B,
+    Phrase == [X|Remaining].
+adv(X,negative,Phrase,Remaining):-
+    adverb(X,A,B),B>A,B>0,
+    Phrase == [X|Remaining].
+adv(X,neutral,Phrase,Remaining):-
+    adverb(X,A,B),B=A,
+    Phrase == [X|Remaining].
 
 sarcastic_sentence--> sarcasm.
 
