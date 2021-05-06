@@ -1,25 +1,27 @@
+
 :- consult([sentiword,determiners]).
 
-n(X,positive):-noun(X,A,B),A>0, A>B.
-n(X,negative):-noun(X,A,B),B>A,B>0.
-n(X,neutral):-noun(X,A,B),B=A,A=0.
+posn([X|T],T):-noun(X,A,B),A>0, A>B.
+negn([X|T],T):-noun(X,A,B),B>A,B>0.
+neun([X|T],T):-noun(X,A,B),B=A,A=0.
 
-v(X,positive):-verb(X,A,B),A>0, A>B.
-v(X,negative):-verb(X,A,B),B>A,B>0.
-v(X,neutral):-verb(X,A,B),B=A,A=0.
 
-adj(X,positive):-adjective(X,A,B),A>0, A>B.
-adj(X,negative):-adjective(X,A,B),B>A,B>0.
-adj(X,neutral):-adjective(X,A,B),B=A.
+posv([X|T],T):-verb(X,A,B),A>0, A>B.
+negv([X|T],T):-verb(X,A,B),B>A,B>0.
+neuv([X|T],T):-verb(X,A,B),B=A,A=0.
 
-adv(X,positive):-adverb(X,A,B),A>0, A>B.
-adv(X,negative):-adverb(X,A,B),B>A,B>0.
-adv(X,neutral):-adverb(X,A,B),B=A.
+posadj([X|T],T):-adjective(X,A,B),A>0, A>B.
+negadj([X|T],T):-adjective(X,A,B),B>A,B>0.
+neuadj([X|T],T):-adjective(X,A,B),B=A.
+
+posadv([X|T],T):-adveb(X,A,B),A>0, A>B.
+negadv([X|T],T):-adveb(X,A,B),B>A,B>0.
+neuadv([X|T],T):-adveb(X,A,B),B=A.
 
 sarcastic_sentence--> sarcasm.
 
-sarcasm--> negphrases, posphrases.
 sarcasm--> posphrases, negphrases.
+sarcasm--> negphrases, posphrases.
 sarcasm--> neuphrases, posphrases.
 
 sarcasm--> negphrases, conj, posphrases.
@@ -36,79 +38,80 @@ posphrases-->posVP.
 
 neuphrases--> neuNP, neuVP.
 
-negphrases--> negNP, negVP.
 negphrases--> negNP.
-negphrases--> adj(_,negative), negNP.
-negphrases--> adj(_,negative), posNP.
-negphrases--> adj(_,negative), neuNP.
-negphrases--> adj(_,negative), negNP, negVP.
-negphrases--> adj(_,negative), neuNP, negVP.
-negphrases--> adj(_,negative), posNP, negVP.
+negphrases--> negNP, negVP.
+negphrases--> negadj, negNP.
+negphrases--> negadj, posNP.
+negphrases--> negadj, neuNP.
+negphrases--> negadj, negNP, negVP.
+negphrases--> negadj, neuNP, negVP.
+negphrases--> negadj, posNP, negVP.
 negphrases--> negVP.
 
 
 /************************************noun phrases***********************************/
 
-posNP-->n(_,positive).
-posNP-->det, n(_,positive).
-posNP-->adj(_,positive), n(_,positive).
-posNP-->adj(_,positive), n(_, nuetral).
-posNP-->det, adj(_,positive), n(_,positive).
-posNP-->det, adj(_,positive), n(_, nuetral).
+posNP-->posn.
+posNP-->det, posn.
+posNP-->posadj, posn.
+posNP-->posadj, neun.
+posNP-->det, posadj, posn.
+posNP-->det, posadj, neun.
 
 
 neuNP--> pronoun.
-neuNP--> n(_,neutral).
-neuNP--> det, n(_,neutral).
-neuNP--> adj(_,neutral), n(_,neutral).
-neuNP--> det, adj(_,neutral), n(_,neutral).
+neuNP--> neun.
+neuNP--> det, neun.
+neuNP--> neuadj, neun.
+neuNP--> det, neuadj, neun.
 
-negNP--> n(_,negative).
-negNP--> det, n(_,negative).
-negNP--> det, adj(_,negative), n(_,neutral).
-negNP--> adj(_,negative), n(_,neutral).
-negNP--> det, adj(_,negative), n(_,negative).
-negNP--> adj(_,negative), n(_,negative).
+negNP--> negn.
+negNP--> det, negn.
+negNP--> det, negadj, neun.
+negNP--> negadj, neun.
+negNP--> det, negadj, negn.
+negNP--> negadj, negn.
 
 /***********************************verb phrases**************************************/
 
-posVP-->  v(_,positive).
-posVP--> pronoun, v(_,positive).
-posVP--> adj(_,positive), v(_,neutral).
-posVP--> adj(_,positive), v(_,positive).
-posVP--> v(_,positive), adj(_,neutral).
-posVP--> v(_,positive), adj(_,positive).
-posVP--> adv(_,positive), v(_,positive).
-posVP--> adv(_,neutral), v(_,positive).
-posVP--> adv(_,positive), v(_,neutral).
-posVP--> pronoun, adv(_,positive), v(_,positive).
-posVP--> pronoun, adv(_,neutral), v(_,positive).
-posVP--> pronoun, adv(_,positive), v(_,neutral).
+posVP--> pronoun, posv.
+posVP--> posv.
+posVP--> posadj, neuv.
+posVP--> posadj, posv.
+posVP--> posv, neuadj.
+posVP--> posv, posadj.
+posVP--> posadv, posv.
+posVP--> neuadv, posv.
+posVP--> posadv, neuv.
+posVP--> pronoun, posadv, posv.
+posVP--> pronoun, neuadv, posv.
+posVP--> pronoun, posadv, neuv.
 
 
-neuVP--> v(_,neutral).
-neuVP--> pronoun, v(_,neutral).
-neuVP--> adj(_,neutral), v(_,neutral).
-neuVP--> v(_,neutral), adv(_,neutral).
-neuVP--> adv(neutral), v(neutral).
-neuVP--> pronoun, adv(neutral), v(neutral).
+neuVP--> neuv.
+neuVP--> pronoun, neuv.
+neuVP--> neuadj, neuv.
+neuVP--> neuv, neuadv.
+neuVP--> neuadv, neuv.
+neuVP--> pronoun, neuadv, neuv.
 
-negVP-->  v(_,negative).
-negVP--> pronoun, v(_,negative).
-negVP--> adj(_,negative), v(_,neutral).
-negVP--> adj(_,negative), v(_,negative).
-negVP--> v(_,negative), adj(_,neutral).
-negVP--> v(_,negative), adj(_,negative).
-negVP--> adv(_,negative), v(_,negative).
-negVP--> adv(_,neutral), v(_,negative).
-negVP--> adv(_,negative), v(_,neutral).
-negVP--> pronoun, adv(_.negative), v(_,negative).
-negVP--> pronoun, adv(_,neutral), v(_,negative).
-negVP--> pronoun, adv(_,negative), v(_,neutral).
-negVP--> adj(_,negative), v(_,positive).
-negVP--> v(_,negative), adj(_,positive).
-negVP--> adv(_,positive), v(_,negative).
-negVP--> adv(_,negative), v(_,positive).
-negVP--> pronoun, adv(_,positive), v(_,negative).
-negVP--> pronoun, adv(_,negative), v(_,positive).
+negVP-->  negv.
+negVP--> pronoun, negv.
+negVP--> negadj, neuv.
+negVP--> negadj, negv.
+negVP--> negv, neuadj.
+negVP--> negv, negadj.
+negVP--> negadv, negv.
+negVP--> neuadv, negv.
+negVP--> negadv, neuv.
+negVP--> pronoun, negadv, negv.
+negVP--> pronoun, neuadv, negv.
+negVP--> pronoun, negadv, neuv.
+negVP--> negadj, posv.
+negVP--> negv, posadj.
+negVP--> posadv, negv.
+negVP--> negadv, posv.
+negVP--> pronoun, posadv, negv.
+negVP--> pronoun, negadv, posv.
+
 
