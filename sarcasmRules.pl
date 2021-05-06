@@ -5,7 +5,6 @@ posn([X|T],T):-noun(X,A,B),A>0, A>B.
 negn([X|T],T):-noun(X,A,B),B>A,B>0.
 neun([X|T],T):-noun(X,A,B),B=A,A=0.
 
-
 posv([X|T],T):-verb(X,A,B),A>0, A>B.
 negv([X|T],T):-verb(X,A,B),B>A,B>0.
 neuv([X|T],T):-verb(X,A,B),B=A,A=0.
@@ -33,8 +32,9 @@ sarcasm--> conj, posphrases, negphrases.
 sarcasm--> conj, neuphrases, posphrases.
 
 
-posphrases--> posNP, posVP.
+
 posphrases-->posVP.
+posphrases--> posNP, posVP.
 
 neuphrases--> neuNP, neuVP.
 
