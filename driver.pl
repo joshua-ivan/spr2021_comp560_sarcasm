@@ -1,12 +1,11 @@
-:- module(driver, [ append_csv/5 ]).
+:- module(driver, [ append_csv/3 ]).
 :- use_module(library(readutil)).
-:- use_module('simple_sarcasm_detector').
-:- use_module('sentiment_scoring').
 :- ensure_loaded('config').
+:- consult([sarcasmRules]).
 
-append_csv(Csv, Text, Pos, Neg, Sarcastic) :-
+append_csv(Csv, Text, Sarcastic) :-
     open(Csv, append, Results),
-    format(Results, '\"~s\",~f,~f,~a\n', [Text, Pos, Neg, Sarcastic]),
+    format(Results, '\"~s\",~a\n', [Text, Sarcastic]),
     close(Results).
 
 process_tweets_(_, Count, _) :-
@@ -17,9 +16,10 @@ process_tweets_(Database, Count, ResultsCsv) :-
     tweet(TweetID, Tweet),
 
     split_string(Tweet, " ", " ", Phrases),
-    score(Phrases, Pos, Neg),
-    is_sarcasm(Pos, Neg, Sarcastic),
-    append_csv(ResultsCsv, Tweet, Pos, Neg, Sarcastic),
+    ( sarcastic_sentence(Phrases, [])
+        -> IsSarcastic = true
+        ; IsSarcastic = false),
+    append_csv(ResultsCsv, Tweet, IsSarcastic),
 
     NewCount is Count + 1,
     process_tweets_(Database, NewCount, ResultsCsv).
@@ -29,19 +29,3 @@ process_tweets(Database) :-
     config(results_file_name, ResultsCsv),
     process_tweets_(Database, 0, ResultsCsv).
 
-process_text_(_, end_of_file, _) :- !.
-process_text_(Stream, _, ResultsCsv) :-
-    read_line_to_string(Stream, Line),
-    string_length(Line, Length),
-    ( Length > 0 -> (
-        split_string(Line, " ", " ", Phrases),
-        score(Phrases, Pos, Neg),
-        is_sarcasm(Pos, Neg, Sarcastic),
-        append_csv(ResultsCsv, Line, Pos, Neg, Sarcastic)
-    ); true ),
-    process_text_(Stream, Line, ResultsCsv).
-
-process_text(File) :-
-    open(File, read, Stream),
-    config(results_file_name, ResultsCsv),
-    process_text_(Stream, "", ResultsCsv).
