@@ -31,15 +31,14 @@ sarcasm--> neuphrases, posphrases.
 
 sarcasm--> negphrases, conj, posphrases.
 sarcasm--> posphrases, conj, negphrases.
-sarcasm--> negphrases, conj, posphrases.
+sarcasm--> neuphrases, conj, posphrases.
 
 sarcasm--> conj, negphrases, posphrases.
 sarcasm--> conj, posphrases, negphrases.
 sarcasm--> conj, neuphrases, posphrases.
 
-
 posphrases--> posNP, posVP.
-posphrases-->posVP.
+posphrases--> posVP.
 
 neuphrases--> neuNP, neuVP.
 
@@ -53,16 +52,14 @@ negphrases--> adj(_,negative), neuNP, negVP.
 negphrases--> adj(_,negative), posNP, negVP.
 negphrases--> negVP.
 
-
 /************************************noun phrases***********************************/
 
-posNP-->n(_,positive).
-posNP-->det, n(_,positive).
-posNP-->adj(_,positive), n(_,positive).
-posNP-->adj(_,positive), n(_, nuetral).
-posNP-->det, adj(_,positive), n(_,positive).
-posNP-->det, adj(_,positive), n(_, nuetral).
-
+posNP--> n(_,positive).
+posNP--> det, n(_,positive).
+posNP--> adj(_,positive), n(_, positive).
+posNP--> adj(_,positive), n(_, neutral).
+posNP--> det, adj(_,positive), n(_, positive).
+posNP--> det, adj(_,positive), n(_, neutral).
 
 neuNP--> pronoun.
 neuNP--> n(_,neutral).
@@ -79,7 +76,7 @@ negNP--> adj(_,negative), n(_,negative).
 
 /***********************************verb phrases**************************************/
 
-posVP-->  v(_,positive).
+posVP--> v(_,positive).
 posVP--> pronoun, v(_,positive).
 posVP--> adj(_,positive), v(_,neutral).
 posVP--> adj(_,positive), v(_,positive).
@@ -91,7 +88,6 @@ posVP--> adv(_,positive), v(_,neutral).
 posVP--> pronoun, adv(_,positive), v(_,positive).
 posVP--> pronoun, adv(_,neutral), v(_,positive).
 posVP--> pronoun, adv(_,positive), v(_,neutral).
-
 
 neuVP--> v(_,neutral).
 neuVP--> pronoun, v(_,neutral).
