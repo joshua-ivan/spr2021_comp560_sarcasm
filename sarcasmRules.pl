@@ -18,10 +18,38 @@ negadv([X|T],T):-adveb(X,A,B),B>A,B>0.
 neuadv([X|T],T):-adveb(X,A,B),B=A.
 
 sarcastic_sentence--> sarcasm.
+sarcastic_sentence--> sentence,sarcasm.
+sarcastic_sentence--> sarcasm, sentence.
+sarcastic_sentence--> sentence,sentence,sarcasm.
+sarcastic_sentence--> sentence,sarcasm,sentence.
+sarcastic_sentence--> sarcasm,sentence,sentence.
+
+sarcastic_sentence--> sarcasm,sentence,sentence,sentence.
+sarcastic_sentence--> sentence,sarcasm,sentence,sentence.
+sarcastic_sentence--> sentence,sentence,sarcasm,sentence.
+sarcastic_sentence--> sentence,sentence,sentence,sarcasm.
+
+sentence-->neuphrases.
+sentence-->neuphrases,neuphrases.
+sentence-->posphrases.
+sentence-->posphrases,posphrases.
+sentence-->negphrases.
+sentence-->negphrases,negphrases.
+
+negsentence--> negphrases, neuphrases.
+negsentence--> neuphrases, negphrases.
+negsentence--> negphrases, negphrases.
+
+possentence--> posphrases, neuphrases.
+possentence--> neuphrases, posphrases.
+possentence--> posphrases, posphrases.
 
 sarcasm--> posphrases, negphrases.
 sarcasm--> negphrases, posphrases.
 sarcasm--> neuphrases, posphrases.
+
+sarcasm-->possentence,negsentence.
+sarcasm-->negsentence,possentence.
 
 sarcasm--> negphrases, conj, posphrases.
 sarcasm--> posphrases, conj, negphrases.
@@ -30,8 +58,6 @@ sarcasm--> negphrases, conj, posphrases.
 sarcasm--> conj, negphrases, posphrases.
 sarcasm--> conj, posphrases, negphrases.
 sarcasm--> conj, neuphrases, posphrases.
-
-
 
 posphrases-->posVP.
 posphrases--> posNP, posVP.
@@ -57,7 +83,6 @@ posNP-->posadj, posn.
 posNP-->posadj, neun.
 posNP-->det, posadj, posn.
 posNP-->det, posadj, neun.
-
 
 neuNP--> pronoun.
 neuNP--> neun.
@@ -86,7 +111,6 @@ posVP--> posadv, neuv.
 posVP--> pronoun, posadv, posv.
 posVP--> pronoun, neuadv, posv.
 posVP--> pronoun, posadv, neuv.
-
 
 neuVP--> neuv.
 neuVP--> pronoun, neuv.
