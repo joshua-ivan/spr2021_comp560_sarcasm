@@ -23,26 +23,48 @@ sarcastic_sentence--> sarcasm, sentence.
 sarcastic_sentence--> sentence,sentence,sarcasm.
 sarcastic_sentence--> sentence,sarcasm,sentence.
 sarcastic_sentence--> sarcasm,sentence,sentence.
-
 sarcastic_sentence--> sarcasm,sentence,sentence,sentence.
 sarcastic_sentence--> sentence,sarcasm,sentence,sentence.
 sarcastic_sentence--> sentence,sentence,sarcasm,sentence.
 sarcastic_sentence--> sentence,sentence,sentence,sarcasm.
 
 sentence-->neuphrases.
+sentence-->conj,neuphrases,neuphrases.
 sentence-->neuphrases,neuphrases.
+sentence-->neuphrases,conj,neuphrases.
 sentence-->posphrases.
+sentence-->conj,posphrases,posphrases.
 sentence-->posphrases,posphrases.
+sentence-->posphrases,conj,posphrases.
 sentence-->negphrases.
+sentence-->conj,negphrases,negphrases.
 sentence-->negphrases,negphrases.
+sentence-->negphrases,conj,negphrases.
 
 negsentence--> negphrases, neuphrases.
 negsentence--> neuphrases, negphrases.
 negsentence--> negphrases, negphrases.
 
+negsentence--> negphrases,conj, neuphrases.
+negsentence--> neuphrases,conj, negphrases.
+negsentence--> negphrases,conj, negphrases.
+
+negsentence--> conj, negphrases, neuphrases.
+negsentence--> conj, neuphrases, negphrases.
+negsentence--> conj, negphrases, negphrases.
+
 possentence--> posphrases, neuphrases.
 possentence--> neuphrases, posphrases.
 possentence--> posphrases, posphrases.
+
+possentence--> posphrases,conj, neuphrases.
+possentence--> neuphrases,conj, posphrases.
+possentence--> posphrases,conj, posphrases.
+
+possentence--> conj, posphrases, neuphrases.
+possentence--> conj, neuphrases, posphrases.
+possentence--> conj, posphrases, posphrases.
+
 
 sarcasm--> posphrases, negphrases.
 sarcasm--> negphrases, posphrases.
@@ -62,7 +84,11 @@ sarcasm--> conj, neuphrases, posphrases.
 posphrases-->posVP.
 posphrases--> posNP, posVP.
 
+neuphrases--> neuNP.
+neuphrases--> neuVP.
 neuphrases--> neuNP, neuVP.
+neuphrases--> neuadj, neuNP.
+neuphrases--> neuadj, neuNP, neuVP.
 
 negphrases--> negNP.
 negphrases--> negNP, negVP.
