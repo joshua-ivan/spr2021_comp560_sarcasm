@@ -8,12 +8,13 @@ append_csv(Csv, Text, Sarcastic) :-
     format(Results, '\"~s\",~a\n', [Text, Sarcastic]),
     close(Results).
 
-process_tweets_(_, Count, _) :-
+process_tweets_(_, _, Count, _) :-
     config(random_sample_size, Count), !.
-process_tweets_(Database, Count, ResultsCsv) :-
+process_tweets_(PrintTweets, Database, Count, ResultsCsv) :-
     database_size(DB_size),
     TweetID is random(DB_size),
     tweet(TweetID, Tweet),
+    ( PrintTweets -> format("~s\n", Tweet) ; true ),
 
     split_string(Tweet, " ", " ", Phrases),
     ( sarcastic_sentence(Phrases, [])
@@ -22,10 +23,11 @@ process_tweets_(Database, Count, ResultsCsv) :-
     append_csv(ResultsCsv, Tweet, IsSarcastic),
 
     NewCount is Count + 1,
-    process_tweets_(Database, NewCount, ResultsCsv).
+    process_tweets_(PrintTweets, Database, NewCount, ResultsCsv).
 
 process_tweets(Database) :-
     use_module(Database),
     config(results_file_name, ResultsCsv),
-    process_tweets_(Database, 0, ResultsCsv).
+    config(print_tweets, PrintTweets),
+    process_tweets_(PrintTweets, Database, 0, ResultsCsv).
 
