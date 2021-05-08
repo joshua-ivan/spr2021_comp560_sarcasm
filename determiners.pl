@@ -86,7 +86,7 @@ conj-->["how"].
 conj-->["if"].
 conj-->["in","case"].
 conj-->["in","order","that"].
-cinj-->["in","order","to"].
+conj-->["in","order","to"].
 conj-->["though"].
 conj-->["even","though"].
 conj-->["even","if"].
