@@ -100,7 +100,6 @@ negphrases--> negadj, neuNP, negVP.
 negphrases--> negadj, posNP, negVP.
 negphrases--> negVP.
 
-
 /************************************noun phrases***********************************/
 
 posNP-->posn.
@@ -132,11 +131,16 @@ posVP--> posadj, posv.
 posVP--> posv, neuadj.
 posVP--> posv, posadj.
 posVP--> posadv, posv.
+posVP--> posv, posadv.
 posVP--> neuadv, posv.
 posVP--> posadv, neuv.
+posVP--> neuv,posadv.
 posVP--> pronoun, posadv, posv.
+posVP--> pronoun, posv, posadv.
 posVP--> pronoun, neuadv, posv.
+posVP--> pronoun, posv, neuadv.
 posVP--> pronoun, posadv, neuv.
+posVP--> pronoun, neuv, posadv.
 
 neuVP--> neuv.
 neuVP--> pronoun, neuv.
@@ -144,6 +148,7 @@ neuVP--> neuadj, neuv.
 neuVP--> neuv, neuadv.
 neuVP--> neuadv, neuv.
 neuVP--> pronoun, neuadv, neuv.
+neuVP--> pronoun, neuv, neuadv.
 
 negVP-->  negv.
 negVP--> pronoun, negv.
@@ -152,16 +157,25 @@ negVP--> negadj, negv.
 negVP--> negv, neuadj.
 negVP--> negv, negadj.
 negVP--> negadv, negv.
+negVP--> negv, negadv.
 negVP--> neuadv, negv.
+negVP--> negv, neuadv.
 negVP--> negadv, neuv.
+negVP--> neuv, negadv.
 negVP--> pronoun, negadv, negv.
+negVP--> pronoun, negv, negadv.
 negVP--> pronoun, neuadv, negv.
+negVP--> pronoun, negv, neuadv.
 negVP--> pronoun, negadv, neuv.
+negVP--> pronoun, neuv,negadv.
 negVP--> negadj, posv.
 negVP--> negv, posadj.
 negVP--> posadv, negv.
+negVP--> negv, posadv.
 negVP--> negadv, posv.
+negVP--> posv,negadv.
 negVP--> pronoun, posadv, negv.
+negVP--> pronoun, negv, posadv.
 negVP--> pronoun, negadv, posv.
-
+negVP--> pronoun, posv,negadv.
 
