@@ -364,3 +364,5 @@ negVP--> pronoun,pronoun, negv, posadv.
 negVP--> pronoun,pronoun, negadv, posv.
 negVP--> pronoun,pronoun, posv,negadv.
 
+neun([X|T],T):- not(noun(X,_,_)),not(verb(X,_,_)),not(adjective(X,_,_)),
+    not(adverb(X,_,_)).
