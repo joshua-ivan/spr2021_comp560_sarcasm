@@ -13,9 +13,9 @@ posadj([X|T],T):-adjective(X,A,B),A>0, A>B.
 negadj([X|T],T):-adjective(X,A,B),B>A,B>0.
 neuadj([X|T],T):-adjective(X,A,B),B=A.
 
-posadv([X|T],T):-adveb(X,A,B),A>0, A>B.
-negadv([X|T],T):-adveb(X,A,B),B>A,B>0.
-neuadv([X|T],T):-adveb(X,A,B),B=A.
+posadv([X|T],T):-adverb(X,A,B),A>0, A>B.
+negadv([X|T],T):-adverb(X,A,B),B>A,B>0.
+neuadv([X|T],T):-adverb(X,A,B),B=A.
 
 sarcastic_sentence--> sarcasm.
 sarcastic_sentence--> sarcasm, sentence.
