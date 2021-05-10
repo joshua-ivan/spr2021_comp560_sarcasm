@@ -1,4 +1,6 @@
 from num2words import num2words
+from pluralizer import Pluralizer
+
 import os
 
 def getdb():
@@ -21,12 +23,13 @@ def get_entries(fact_base):
                     if word.find('#') > -1:
                         fact_data.append(word)
                 
-                for value in fact_data:
-                    kb.append((info[0], value, info[2], info[3]))
+                    for value in fact_data:
+                        kb.append((info[0], value, info[2], info[3]))
     return kb
     
 def prologify(facts):
     pldb = []
+    pluralizer = Pluralizer()
     
     for entry in facts:
         fact_type = entry[0]
@@ -37,6 +40,8 @@ def prologify(facts):
         elif fact_type == 'n':
             proper_entry = remove_illegal_syntax(entry[1])
             pldb.append('noun(' + '\"' + proper_entry + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
+            plural = pluralizer.pluralize(proper_entry)
+            pldb.append('noun(' + '\"' + plural + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
         elif fact_type == 'r':
             proper_entry = remove_illegal_syntax(entry[1])
             pldb.append('adverb(' + '\"' + proper_entry + '\"' + ', ' + entry[2] + ', ' + entry[3] + ').')
