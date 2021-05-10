@@ -3,7 +3,7 @@
 :- ensure_loaded('sentiword').
 lookup(Word, PosScore, NegScore) :-
     adjective(Word, PosScore, NegScore);
-    adveb(Word, PosScore, NegScore);
+    adverb(Word, PosScore, NegScore);
     noun(Word, PosScore, NegScore);
     verb(Word, PosScore, NegScore).
 lookup(NotInSentiword, 0, 0) :- string(NotInSentiword), !.
