@@ -17,6 +17,8 @@ posadv([X|T],T):-adverb(X,A,B),A>0, A>B.
 negadv([X|T],T):-adverb(X,A,B),B>A,B>0.
 neuadv([X|T],T):-adverb(X,A,B),B=A.
 
+nonword([X|T], T):- not(noun(X, _, _)), not(verb(X, _, _)), not(adjective(X, _, _)), not(adverb(X, _, _)), !.
+
 sarcastic_sentence--> sarcasm.
 sarcastic_sentence--> sarcasm, sentence.
 sarcastic_sentence--> sarcasm,sentence,sentence.
@@ -28,8 +30,8 @@ sarcastic_sentence--> sentence,sarcasm,sentence,sentence.
 sarcastic_sentence--> sentence,sentence,sarcasm,sentence.
 sarcastic_sentence--> sentence,sentence,sentence,sarcasm.
 
-
 sentence-->neuphrases.
+sentence--> nonword.
 sentence-->conj,neuphrases,neuphrases.
 sentence-->conj,conj,neuphrases,neuphrases.
 sentence-->conj,conj,conj,neuphrases,neuphrases.
@@ -364,5 +366,3 @@ negVP--> pronoun,pronoun, negv, posadv.
 negVP--> pronoun,pronoun, negadv, posv.
 negVP--> pronoun,pronoun, posv,negadv.
 
-neun([X|T],T):- not(noun(X,_,_)),not(verb(X,_,_)),not(adjective(X,_,_)),
-    not(adverb(X,_,_)).
