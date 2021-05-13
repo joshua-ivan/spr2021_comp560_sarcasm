@@ -10,24 +10,29 @@ append_csv(Csv, Text, Sarcastic) :-
 
 process_tweets_(_, _, Count, _) :-
     config(random_sample_size, Count), !.
-process_tweets_(PrintTweets, Database, Count, ResultsCsv) :-
+process_tweets_(Silent, Hits, Count, ResultsCsv) :-
     database_size(DB_size),
     TweetID is random(DB_size),
     tweet(TweetID, Tweet),
-    ( PrintTweets -> format("~s\n", Tweet) ; true ),
+    ( \+Silent
+        -> format("~s\n", Tweet)
+        ; true ),
 
     split_string(Tweet, " ", " ", Phrases),
     ( sarcastic_sentence(Phrases, [])
-        -> IsSarcastic = true
-        ; IsSarcastic = false),
+        -> (IsSarcastic = true, NewHits is Hits + 1)
+        ; (IsSarcastic = false, NewHits is Hits)),
+    ( \+Silent
+        -> format("~s, ~d/~d.\n", [IsSarcastic, NewHits, Count])
+        ; true ),
     append_csv(ResultsCsv, Tweet, IsSarcastic),
 
     NewCount is Count + 1,
-    process_tweets_(PrintTweets, Database, NewCount, ResultsCsv).
+    process_tweets_(Silent, NewHits, NewCount, ResultsCsv).
 
 process_tweets(Database) :-
     use_module(Database),
     config(results_file_name, ResultsCsv),
-    config(print_tweets, PrintTweets),
-    process_tweets_(PrintTweets, Database, 0, ResultsCsv).
+    config(silent, Silent),
+    process_tweets_(Silent, 0, 0, ResultsCsv).
 
