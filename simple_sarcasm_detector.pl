@@ -1,6 +1,7 @@
 :- module(simple_sarcasm_detector, [ is_sarcasm/3 ]).
 :- ensure_loaded('config').
 
+is_sarcasm(0, 0, false) :- !.
 is_sarcasm(0, _, false) :- !.
 is_sarcasm(_, 0, false) :- !.
 is_sarcasm(Pos, Neg, true) :-
